@@ -1,6 +1,16 @@
 # 📝 To-Do List — Node.js + TypeScript
 
+> Projet d'apprentissage — prise en main de TypeScript et Clean Architecture.
+
 A CLI to-do list built with Node.js and TypeScript, structured with Clean Architecture principles.
+
+## Contexte
+
+Ce projet est un exercice de prise en main de TypeScript et de la Clean Architecture.
+L'objectif était de mettre en pratique :
+- La structuration d'un projet Node.js en couches (entités, usecases, repositories)
+- L'écriture de tests unitaires avec Jest
+- L'utilisation de TypeScript en mode strict
 
 ## Tech Stack
 
