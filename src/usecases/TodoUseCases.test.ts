@@ -13,16 +13,17 @@ describe("TodoUseCases", () => {
   describe("addTodo", () => {
     it("crée un todo avec le bon titre", async () => {
       const { useCases } = makeUseCases();
-      const todo = await useCases.addTodo("Apprendre Jest");
+      const todo = await useCases.addTodo("Apprendre Jest", "moyenne");
 
       expect(todo.title).toBe("Apprendre Jest");
       expect(todo.status).toBe("en cours");
+      expect(todo.priority).toBe("moyenne");
       expect(todo.id).toBeDefined();
     });
 
     it("rejette un titre vide", async () => {
       const { useCases } = makeUseCases();
-      await expect(useCases.addTodo("   ")).rejects.toThrow(
+      await expect(useCases.addTodo("   ", "faible")).rejects.toThrow(
         "Le titre ne peut pas être vide"
       );
     });
@@ -37,8 +38,8 @@ describe("TodoUseCases", () => {
 
     it("retourne tous les todos ajoutés", async () => {
       const { useCases } = makeUseCases();
-      await useCases.addTodo("Todo 1");
-      await useCases.addTodo("Todo 2");
+      await useCases.addTodo("Todo 1", "faible");
+      await useCases.addTodo("Todo 2", "moyenne");
       const todos = await useCases.listTodos();
       expect(todos).toHaveLength(2);
     });
@@ -47,7 +48,7 @@ describe("TodoUseCases", () => {
   describe("completeTodo", () => {
     it("marque un todo comme terminé", async () => {
       const { useCases } = makeUseCases();
-      const todo = await useCases.addTodo("Finir le projet");
+      const todo = await useCases.addTodo("Finir le projet", "élevée");
       await useCases.completeTodo(todo.id);
       const todos = await useCases.listTodos();
       expect(todos[0].status).toBe("fait");
@@ -57,7 +58,7 @@ describe("TodoUseCases", () => {
   describe("deleteTodo", () => {
     it("supprime un todo existant", async () => {
       const { useCases } = makeUseCases();
-      const todo = await useCases.addTodo("À supprimer");
+      const todo = await useCases.addTodo("À supprimer", "faible");
       await useCases.deleteTodo(todo.id);
       const todos = await useCases.listTodos();
       expect(todos).toHaveLength(0);

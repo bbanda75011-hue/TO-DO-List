@@ -1,7 +1,7 @@
 import { select, input, checkbox } from "@inquirer/prompts";
 import { JsonTodoRepository } from "../repositories/JsonTodoRepository";
 import { TodoUseCases } from "../usecases/TodoUseCases";
-import { Todo } from "../entities/Todo";
+import { Priority, Todo } from "../entities/Todo";
 
 const repo = new JsonTodoRepository();
 const useCases = new TodoUseCases(repo);
@@ -39,7 +39,15 @@ async function mainMenu(): Promise<void> {
   switch (action) {
     case "add": {
       const title = await input({ message: "Titre de la tâche :" });
-      await useCases.addTodo(title);
+      const priority = await select({
+        message: "Priorité :",
+        choices: [
+            { name: "🟢 Faible", value: "faible" },
+            { name: "🟡 Moyenne", value: "moyenne" },
+            { name: "🔴 Élevée", value: "élevée" },
+        ],
+      });
+      await useCases.addTodo(title, priority as Priority);
       break;
     }
 

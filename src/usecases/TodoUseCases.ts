@@ -1,12 +1,12 @@
-import { createTodo, Todo } from "../entities/Todo";
+import { createTodo, Priority, Todo } from "../entities/Todo";
 import { TodoRepository } from "../repositories/TodoRepository";
 
 export class TodoUseCases {
   constructor(private readonly repo: TodoRepository) {}
 
-  async addTodo(title: string): Promise<Todo> {
+  async addTodo(title: string, priority: Priority): Promise<Todo> {
     if (!title.trim()) throw new Error("Le titre ne peut pas être vide");
-    const todo = createTodo(title);
+    const todo = createTodo(title, priority);
     await this.repo.save(todo);
     return todo;
   }
